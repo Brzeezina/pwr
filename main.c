@@ -31,7 +31,7 @@ int main(){
         
     }
     while(a == 0){
-        printf("a=0");
+        printf("a=0       s");
     }
     return 1;
 }
