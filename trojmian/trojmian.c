@@ -181,8 +181,9 @@ Test 4:
    przypisali b,c = 0. Wynik jakim jest x1=x2=-0.000000 jest błędny pomimo nie podania żadnej wartości liczbowej. Warto byłoby usprawnić 
    nasz program o instrukcję warunkową sprawdzającą przy wpisywaniu czy podane wartości są tesktem lub liczbą.
 
-Wnioski: Program działa w większości przypadków bez zarzutów. Należy jednak pamiętać o niektórych przypadkach jakie zostały 
-  przedstawione w powyższych testach. Ze względu na specyfikację języka C niektóre wyniki testów różniły się od wyników z kalkulatora naukowego (głównie o części 
-  tysięczne i mniejsze). Algorytm należałoby usprawnić o kilka prostych, ale jakże potrzebnych funkcji aby poprawić skuteczność naszego programu.  
+Wnioski: Program działa w większości przypadków bez zarzutów. Należy jednak pamiętać o niektórych sytuacjach jakie zostały 
+  przedstawione w powyższych testach. Ze względu na specyfikację języka C i użytych zmiennych typu float, 
+  niektóre wyniki testów różniły się od wyników z kalkulatora naukowego (różnice były na czwartym i dalszych miejscach po przecinku). 
+  Algorytm należałoby usprawnić o np. mechanizm wykrywający czy dane wejściowe są liczbami aby poprawić skuteczność naszego programu.
 
 */
