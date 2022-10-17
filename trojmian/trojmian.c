@@ -140,22 +140,22 @@ Test 4:
  - Oczekiwany rezultat (w przybliżeniu): x1 = 0.0894901; x2 = 1.83712
  - Dane wyjściowe: Rozwiazaniem sa x1=0.089490 i x2=1.837116
  - Komentarz: Rozwiązania zgadzają się z oczekiwanymi. Widzimy, że x2 jest zaokrąglone, czyli nasz program dał nam dokładniejszy wynik 
-   niż kalkulator naukowy, jednak z wartością x1 mamy odwrotną sytuację, gdyż zdefiniowaliśmy nasze a,b oraz c jako zmienną typu flaot i wynik
-   zaokrąglony jest do 6 cyrf po przecinku.
+   niż kalkulator naukowy, jednak z wartością x1 mamy odwrotną sytuację, gdyż zdefiniowaliśmy nasze a,b oraz c jako zmienną typu float i wynik
+   zaokrąglony jest do 6 cyfr po przecinku.
 
  Test 9:
  - Cel: Sprawdzenie wyniku i jego poprawności gdy wynik jest liczbą z pierwiastkiem niewymiernym
- - Metoda testowania (dane wejściowe): 
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+ - Metoda testowania (dane wejściowe): a = 1; b = -4; c = 2
+ - Oczekiwany rezultat: x1 = 3.414213; x2 = 0.585786
+ - Dane wyjściowe: "Rozwiazaniem sa x1=0.585786 i x2=3.414214"
+ - Komentarz: Wynik się zgadza tak samo jak i zaokrąglenia.
 
  Test 10:
  - Cel: Sprawdzenie wyniku i jego poprawności gdy a = -1; b = 0; c jest bardzo duże
- - Metoda testowania (dane wejściowe): a = -1; b = 0; c = 99999999999999
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+ - Metoda testowania (dane wejściowe): a = -1; b = 0; c = 114568115684
+ - Oczekiwany rezultat: x1 = -338479,12149; x2 = 338479,12149
+ - Dane wyjściowe: "Rozwiazaniem sa x1=338479.125000 i x2=-338479.125000"
+ - Komentarz: Wyniki różnią się od siebie od 3 cyfry po przecinku. 
 
  Test 11:
  - Cel:
