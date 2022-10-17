@@ -50,10 +50,8 @@ int main() {
 9. Wynik z pierwiastkiem niewymiernym
 10. a = -1, b = 0 i bardzo duze c
 11. a = 0, b małe, c bardzo duże
-12. Dla losowych dodatnich argumentow
-13. Dla losowych ujemnych argumentow
-14. Gdy wpisany zostanie tekst (lub wszystkie znaki za wyjątkiem "+" oraz "-") zamiast liczby
-15. Gdy wpisany zostanie znak "+" lub "-"
+12. Dla losowych ujemnych argumentow
+13. Gdy wpisany zostanie tekst (lub wszystkie znaki za wyjątkiem "+" oraz "-") zamiast liczby
 
 Sprawozdanie z zadania 1
 
@@ -155,41 +153,36 @@ Test 4:
  - Metoda testowania (dane wejściowe): a = -1; b = 0; c = 114568115684
  - Oczekiwany rezultat: x1 = -338479,12149; x2 = 338479,12149
  - Dane wyjściowe: "Rozwiazaniem sa x1=338479.125000 i x2=-338479.125000"
- - Komentarz: Wyniki różnią się od siebie od 3 cyfry po przecinku. 
+ - Komentarz: Wyniki różnią się od siebie od 3 cyfry po przecinku. Zaokrąglenie może nie wydawać się wielkie, jednak jeżeli
+   mamy do czynienia z równaniem, w którym nawet te najmniejsze części się liczą to powoduje to dość poważny problem.
+   Należałoby zmienić typ zmiennej z "float" na "double".
 
  Test 11:
- - Cel:
- - Metoda testowania (dane wejściowe):
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+ - Cel: Sprawdzenie wyniku i jego poprawności gdy a = 0, b małe, c bardzo duże
+ - Metoda testowania (dane wejściowe): a = 0; b = 2; c = 1000000000
+ - Oczekiwany rezultat: x = -1000000000
+ - Dane wyjściowe: "Jest to r├│wnanie liniowe o rozwiazaniu x=-500000000.000000"
+ - Komentarz: Tak jak w tescie nr 4 algorytm rozpoznał, że jest to równanie liniowe. W tym przypadku wynik jak i zaokrąglenia
+   zgadzają się.
 
  Test 12:
- - Cel:
- - Metoda testowania (dane wejściowe):
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+ - Cel: Sprawdzenie wyniku i jego poprawności dla losowych ujemnych argumentow.
+ - Metoda testowania (dane wejściowe): a = -3; b = -22; c = -35
+ - Oczekiwany rezultat: x1 = -5; x2 = -7/3
+ - Dane wyjściowe: "Rozwiazaniem sa x1=-2.333333 i x2=-5.000000"
+ - Komentarz: Algorytm poradził sobie bez błędnie z policzeniem ujemnych wartości, jak i również z rozwinięciem dziesiętym ułamka wymiernego.
 
  Test 13:
- - Cel:
- - Metoda testowania (dane wejściowe):
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+ - Cel: Sprawdzenie wyniku, jego poprawności oraz tego jak algorytm zareaguje gdy zamiast liczb podanie zostanie jakiś tekst
+ - Metoda testowania (dane wejściowe): Hello world !
+ - Oczekiwany rezultat: Brak
+ - Dane wyjściowe: "Podaj wartosc b:Podaj wartosc c:Rozwiazaniem sa x1=x2=-0.000000"
+ - Komentarz: Program przestał działać po podaniu pierwszego słowa, a następnie zwrócił nam powyższy tekst. Program zareagował tak jakbyśmy
+   przypisali b,c = 0. Wynik jakim jest x1=x2=-0.000000 jest błędny pomimo nie podania żadnej wartości liczbowej. Warto byłoby usprawnić 
+   nasz program o instrukcję warunkową sprawdzającą przy wpisywaniu czy podane wartości są tesktem lub liczbą.
 
- Test 14:
- - Cel:
- - Metoda testowania (dane wejściowe):
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
-
- Test 15:
- - Cel:
- - Metoda testowania (dane wejściowe):
- - Oczekiwany rezultat:
- - Dane wyjściowe:
- - Komentarz:
+Wnioski: Program działa w większości przypadków bez zarzutów. Należy jednak pamiętać o niektórych przypadkach jakie zostały 
+  przedstawione w powyższych testach. Ze względu na specyfikację języka C niektóre wyniki testów różniły się od wyników z kalkulatora naukowego (głównie o części 
+  tysięczne i mniejsze). Algorytm należałoby usprawnić o kilka prostych, ale jakże potrzebnych funkcji aby poprawić skuteczność naszego programu.  
 
 */
