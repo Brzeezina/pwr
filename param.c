@@ -2,10 +2,6 @@
 
 int proba = 1, parametr;
 
-void param(){
-    
-}
-
 int main(){
     printf("Podaj %d. wartosc parametru: ", proba);
     scanf("%d", &parametr);
@@ -29,5 +25,3 @@ int main(){
 
     return 0;
 }
-
-//cd OneDrive/Pulpit/studiaC
