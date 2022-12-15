@@ -5,9 +5,9 @@ typedef struct{
 }Pixel;
 
 typedef struct{
-    int tab[MAX][MAX], wymx, wymy, grayscale, min_pixel, max_pixel;
+    int tab[MAX][MAX], wymx, wymy, grayscale, min_pixel, max_pixel, magick_number;
     FILE *fileIn, *fileOut;
-    char name[256], nameToSave[256];
+    char *name, nameToSave[256];
 }Obraz;
 
 typedef struct{
@@ -15,14 +15,7 @@ typedef struct{
     int negatyw;
 }Opcje;
 
-int min_pixel(FILE *, int (*)[MAX], int *, int *);
-int max_pixel(FILE *, int (*)[MAX], int *, int *);
-void negatyw(FILE *, int (*)[MAX], int *, int *, int *, char *);
-void kontur(FILE *, int (*)[MAX], int *, int *, int *, char *);
-//void filtr_gamma(FILE *, int (*)[MAX],int *,int *,int*,char *,float);
-int readImg(Obraz *obraz);
-int CheckIfFileExists(Obraz *obraz);
+int readImg(FILE *fileIn, Obraz *obraz);
 void saveImg(Obraz *obraz);
 void wyswietl(Obraz *obraz);
-int GetPixel(Obraz *obraz);
-int printImg(Obraz *obraz);
+void checkMagickNumber(Obraz *obraz);

@@ -14,20 +14,18 @@ int main() {
   float gamma;
 
   int odczytano = 0;
-  FILE *plik;
   char nazwa[100];
 
   /* Wczytanie zawartosci wskazanego pliku do pamieci */
   printf("Podaj nazwe pliku:\n");
   scanf("%s",nazwa);
-  plik=fopen(nazwa,"r");
-
   Obraz image;
+  image.name = nazwa;
   image.fileIn = fopen(nazwa,"r");
 
-  //readImg(&image);
-  //GetPixel(&image);
-  //printImg(&image);
+  readImg(image.fileIn,&image);
+  //wyswietl(&image);
+}
 //Jeżeli plik nie jest pusty -> wyświetl menu
   /*if (plik != NULL) { 
     odczytano = czytaj(plik,obraz,&wymx,&wymy,&odcieni);
@@ -67,4 +65,3 @@ int CheckMagickNumber(Obraz *obraz){
   }
 
   return odczytano;*/
-}
