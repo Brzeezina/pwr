@@ -20,48 +20,53 @@
  * \return liczba wczytanych pikseli						    *
  ************************************************************************************/
 
-int CzytajObraz(Obraz *obraz){
-  char buff[DL_LINII];
-  int znak;
+int readImg(Obraz *obraz) {
+  char buf[DL_LINII];      /* bufor pomocniczy do czytania naglowka i komentarzy */
+  int znak;                /* zmienna pomocnicza do czytania komentarzy */
+  int koniec=0;            /* czy napotkano koniec danych w pliku */
+  int i,j;
 
-  //Czy istnieje taki plik
-  if(obraz->fileIn == NULL){
-    printf("Blad: Nie znaleziono takiego pliku\n");
-    return false;
-  }
-  
-  if(fgets(buff, DL_LINII, obraz->fileIn)==NULL) return false;
-  
-  if((buff[0]!='P') || (buff[1] != '2')){
-    printf("Blad: To nie jest plik PGM\n");
-    return false;
+  /*Sprawdzenie czy podano prawid³owy uchwyt pliku */
+  if (obraz->fileIn==NULL) {
+    fprintf(stderr,"Blad: Nie podano uchwytu do pliku\n");
+    return(0);
   }
 
-  do{
-    if((znak=fgetc(obraz->fileIn)) == '#'){
-      if(fgets(buff,DL_LINII,obraz->fileIn) == NULL){
-        return false;
-      }else{
-        ungetc(znak, obraz->fileIn);
-      }
-    }
-  }while(znak == '#');
+  /* Sprawdzenie "numeru magicznego" - powinien byæ P2 */
+  if (fgets(buf,DL_LINII,obraz->fileOut)==NULL)   /* Wczytanie pierwszej linii pliku do bufora */
+    koniec=1;                              /* Nie udalo sie? Koniec danych! */
 
+  if ( (buf[0]!='P') || (buf[1]!='2') || koniec) {  /* Czy jest magiczne "P2"? */
+    fprintf(stderr,"Blad: To nie jest plik PGM\n");
+    return(0);
+  }
+
+  /* Pominiecie komentarzy */
+  do {
+    if ((znak=fgetc(obraz->fileIn))=='#') {         /* Czy linia rozpoczyna sie od znaku '#'? */
+      if (fgets(buf,DL_LINII,obraz->fileIn)==NULL)  /* Przeczytaj ja do bufora                */
+	koniec=1;                   /* Zapamietaj ewentualny koniec danych */
+    }  else {
+      ungetc(znak,obraz->fileIn);                   /* Gdy przeczytany znak z poczatku linii */
+    }                                         /* nie jest '#' zwroc go                 */
+  } while (znak=='#' && !koniec);   /* Powtarzaj dopoki sa linie komentarza */
+                                    /* i nie nastapil koniec danych         */
+
+  /* Pobranie wymiarow obrazu i liczby odcieni szarosci */
   if (fscanf(obraz->fileIn,"%d %d %d",obraz->wymx,obraz->wymy,obraz->grayscale)!=3) {
     fprintf(stderr,"Blad: Brak wymiarow obrazu lub liczby stopni szarosci\n");
     return(0);
   }
   /* Pobranie obrazu i zapisanie w tablicy obraz_pgm*/
-  for (int i=0;i<obraz->wymy;i++) {
-    for (int j=0;j<obraz->wymx;j++) {
+  for (i=0;i<obraz->wymy;i++) {
+    for (j=0;j<obraz->wymx;j++) {
       if (fscanf(obraz->fileIn,"%d",&(obraz->tab[i][j]))!=1) {
-	      fprintf(stderr,"Blad: Niewlasciwe wymiary obrazu\n");
-        printf("%d ", obraz->tab[i][j]);
-	      return(0);
+	fprintf(stderr,"Blad: Niewlasciwe wymiary obrazu\n");
+	return(0);
       }
     }
-    printf("\n");
   }
+  return obraz->wymx*obraz->wymy;   /* Czytanie zakonczone sukcesem    */
 }
 
 //obraz->tab[i][j] = fscanf(obraz->fileIn,"%d");

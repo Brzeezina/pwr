@@ -25,9 +25,9 @@ int main() {
   Obraz image;
   image.fileIn = fopen(nazwa,"r");
 
-  CzytajObraz(&image);
-  GetPixel(&image);
-  printImg(&image);
+  //readImg(&image);
+  //GetPixel(&image);
+  //printImg(&image);
 //Jeżeli plik nie jest pusty -> wyświetl menu
   /*if (plik != NULL) { 
     odczytano = czytaj(plik,obraz,&wymx,&wymy,&odcieni);

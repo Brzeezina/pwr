@@ -20,7 +20,7 @@ int max_pixel(FILE *, int (*)[MAX], int *, int *);
 void negatyw(FILE *, int (*)[MAX], int *, int *, int *, char *);
 void kontur(FILE *, int (*)[MAX], int *, int *, int *, char *);
 //void filtr_gamma(FILE *, int (*)[MAX],int *,int *,int*,char *,float);
-int CzytajObraz(Obraz *obraz);
+int readImg(Obraz *obraz);
 int CheckIfFileExists(Obraz *obraz);
 void saveImg(Obraz *obraz);
 void wyswietl(Obraz *obraz);
