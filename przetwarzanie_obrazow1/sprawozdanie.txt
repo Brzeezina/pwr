@@ -59,6 +59,95 @@ Test 1.3:
     Nie powstał nowy plik, więc wszystko się zgadza.
 
 Test 1.4:
-    - Cel testu: 
+    - Cel testu: Wyświetlenie wczytanego pliku
+    - Opis: po użyciu argumentu '-w' wyskakuje błąd naruszenia ochrony pamięci. Możliwą przyczyną tego 
+    błędu jest to, że plik zostaje załadowany, lecz funkcja jest tak skonstruowana, że wyświetla ona nowy plik,
+    który jeszcze nie został zapisany. Możliwości pojawienia się tego błędu jest więcej i myśle, że podana przeze 
+    mnie opcja nie jest jego jedyną przyczyną.
+
+Test 2.1:
+    - Cel testu: Wykorzystanie filtru negatywu na plikach PGM i PPM
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_negatyw.pgm -n -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_negatyw.ppm -n -s" 
+    Oba obrazy zostały poprawnie zapisane, a kolory są widocznie odwrócone.
+
+Test 2.2:
+    - Cel testu: Wykorzystanie filtru konturowania na plikach PGM i PPM
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_kontur.pgm -k -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_kontur.ppm -k -s" 
+    Filtr działa widocznie tylko dla plików PGM, ponieważ mają one pojedyńcze pixele, w skali szarości.
+    Natomiast pliki PPM są zapisane w formacie RGB, czyli obok siebie są wartości kolorów pojedyńczego pixela.
+    Obraz PGM jest widocznie skonturowany, lecz PPM wygląda jak po użyciu filtra termowizyjnego lub jakiegoś 
+    typu rentgena. Dzieje się tak gdyż funkcja kontur bierze wartości sąsiednich pixeli.
+
+Test 2.3:
+    - Cel testu: Wykorzystanie filtru rozmycia pionowego/poziomego na plikach PGM i PPM
+    - Opis: Wprowadzona komenda:
+    Dla rozmycia poziomego:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_x.pgm -x -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_x.ppm -x -s" 
+    Dla rozmycia pionowego:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_y.pgm -y -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_y.ppm -y -s" 
+    Dla obrazów PGM funkcja działa bezbłędnie. Dla PPM sens jest tylko używać rozmycia pionowego, ponieważ poziome
+    wykorzystuje wartości pixeli sąsiednich w poziomie. Jako iż jest on zapisany w formacie RGB, to obraz zmienił tylko
+    kolor.
+
+Test 2.4:
+    - Cel testu: Wykorzystanie filtru rozciągania histogramu na plikach PGM i PPM
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_h.pgm -h -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_h.ppm -h -s" 
+    Dla obu obrazów o dziwo ta funkcja nie działa. Jedyne co dostajemy to czarny obraz (tablicę samych zer).
+    Zaskakujące jest to, że wszystkie parametry obrazu są zapisane w pliku (magiczny numer, skala szarosci, wymiary),
+    natomiast wartości pixeli sa równe 0. Dziwi mnie to jeszcze bardziej, gdyż funckja jest skopiowana z poprzedniego
+    programu, w którym działała bez zarzutów.
+
+Test 2.5:
+    - Cel testu: Wykorzystanie filtru konwersji PPM na PGM (czarno biały obraz)
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_blackandwhite.pgm -baw -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_blackandwhite.ppm -baw -s"
+    Dla próby wczytania obrazu PGM wyświetla komunikat, że podany plik nie jest PGM. To dobrze,
+    poniważ filtr ten działa tylko dla obrazów PPM (po co zamieniać czarno biały obraz na czarno biały?).
+    Dla obrazów PPM, wszystko działa bezbłędnie. Magiczny numerek zostaje zmieniony z P3 na P2, a cały
+    obraz jest czarno-biały. Skrót '-baw' oznacza 'Black and white' 
+
+Test 2.6:
+    - Cel testu: Wykorzystanie dwóch filtrów po sobie np negatywu i konturu na plikach PGM i PPM
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_negatyw_kontur.pgm -n -k -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_negatyw_kontur.ppm -n -k -s" 
+
+Test 2.7:
+    - Cel testu: Wykorzystanie poprzednich filtrów ale w odwrotnej kolejności
+    - Opis: Wprowadzona komenda:
+        - Dla pgm: "./a.out -i kubus.pgm -o kubus_kontur_negatyw.pgm -k -n -s"
+        - Dla ppm: "./a.out -i koza.ppm -o koza_kontur_negatyw.ppm -k -n -s" 
+
+Wnioski dla Testu 2.6 oraz 2.7: Filtry nie użyły się w podanej kolejności. Kolejność nałożenia filtrów zależy w tym programie
+    od kolejności w jakiej zostały ustawione warunki w pliku 'odczyt.c'. Argumenty typu '-n' '-k' zmieniają tylko wartości
+    zmiennych w strukturze opcje, które są odpowiedzialne za czytanie i sprawdzanie czy chcemy tę opcję wywołać. Nie ma więc
+    ona dostępu do kolejności nałożenia filtru. Aby tak było należało by usprawnić program o funkcję, która ustawia w kolejności podane
+    argumenty.
+
+Test 3.1:
+    - Cel testu: Niepoprawne wartości argumentów '-i' oraz '-o'
+    - Opis:
+        - Po wprowadzeniu samego argumentu '-i' "./a.out -i", program wyświetlił błąd nr -2 czyli B_BRAKNAZWY.
+        - Po wprowadzeniu samego argumentu '-o' "./a.out -o", program wyświetlił błąd nr -2 czyli B_BRAKNAZWY.
+        - Po wprowadzeniu argumentów '-i' i '-o' "./a.out -i -o", program wyświetlił błąd nr -4 czyli B_BRAKPLIKU.
+        - Po wprowadzeniu nazwy pliku wejściowego oraz argument '-o' bez nazwy pliku wyjściowego "./a.out -i kubus.pgm -o",
+        program wyświetlił błąd nr -2 czyli B_BRAKNAZWY.
+        - Po wprowadzeniu nazwy pliku wyjściowego oraz argument '-i' bez nazwy pliku wyjściowego "./a.out -i -o kubus_nowy.pgm",
+        program wyświetlił błąd nr -1 czyli B_NIEPOPRAWNAOPCJA. Program wczytał argument -o jako nazwę pliku, a nazwę pliku jako opcję,
+        co spowodowało wyrzucenie błędu.
+        - Po wprowadzeniu wszystkich argumentów poprawnie "./a.out -i kubus.pgm -o kubus_nowy.pgm", program nic nie wyświetlił, lecz 
+        stworzył nowy pusty plik o podanej nazwie.
 
 Wnioski:
+W programie do poprawy jest funkcja wyświetlania obrazu, która wyświetla nam błąd naruszenia ochrony pamięci, z którym cięzko się uporać, 
+oraz usprawnienie funkcji zapisu, tak aby nie zapisywała ona pliku, gdy nie został podany żaden argument. Patrząc na ogół programu, 
+to działa on przyzwoicie i w miarę intuicyjnie. Wyjątkiem jest tutaj kolejność wykonywania się filtrów. 
