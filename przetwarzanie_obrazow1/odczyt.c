@@ -1,67 +1,55 @@
 #include "const.h"
 #include "funkcje.h"
-#include "odczyt.h"
 
-#define MAX 512            /* Maksymalny rozmiar wczytywanego obrazu */
-#define DL_LINII 1024      /* Dlugosc buforow pomocniczych */
+//cc -X odczyt.c funkcje.c opcje.c -lm
 
-//cc -X odczyt.c funkcje.c -lm
-//./a.out odczyt.c
-
-int main() {
-  int obraz[MAX][MAX] ;
-  int wymx,wymy,odcieni,wybor;
-  float gamma;
-
-  int odczytano = 0;
-  char nazwa[100];
-
-  /* Wczytanie zawartosci wskazanego pliku do pamieci */
-  printf("Podaj nazwe pliku:\n");
-  scanf("%s",nazwa);
-  Obraz image;
-  image.name = nazwa;
-  image.fileIn = fopen(nazwa,"r");
-
-  readImg(image.fileIn,&image);
-  //wyswietl(&image);
-}
-//Jeżeli plik nie jest pusty -> wyświetl menu
-  /*if (plik != NULL) { 
-    odczytano = czytaj(plik,obraz,&wymx,&wymy,&odcieni);
-    fclose(plik);
-    printf("MENU\n");
-    printf("1 - Negatyw\n");
-    printf("2 - Kontur\n");
-    printf("3 - Korekcja gamma\n");
-    printf("4 - Zakonczenie programu\n");
-    printf("Twoj wybor: ");scanf("%d", &wybor);
-  }
-
-  //Użycie wybranej w menu funkcji filtrowania
-  if (odczytano != 0){
-    switch (wybor)
-    {
-
-int CheckMagickNumber(Obraz *obraz){
-  
-});
-      break;
-    case 2:
-      kontur(plik, obraz, &wymx, &wymy, &odcieni, nazwa);
-      break;
-    case 3:
-      gamma = 0;
-      printf("Podaj wartosc gamma: "); scanf("%f", &gamma);
-      filtr_gamma(plik, obraz, &wymx, &wymy, &odcieni, nazwa, gamma);
-      break;
-    case 4:
-        printf("Zakanczanie dzialania programu...\n");
-        return 0;
-    default:
-        printf("Nie ma takiej opcji wyboru!\n");
-        return 0;
+int main(int argc, char **argv){
+  Image img;
+  Options option;
+  int kod_bledu = 0;
+  kod_bledu = przetwarzaj_opcje(argc,argv,&option);
+  if(kod_bledu != 0){
+    printf("Blad numer %d\n", kod_bledu);
+  }else{
+    readImg(&img, &option);
+    if (option.menu == 0){
+      if(option.h == 1){
+        histogram(&img);
+      }
+      if(option.negatyw == 1){
+        negative(&img);
+      }
+      if(option.kontur == 1){
+        kontur(&img);
+      }
+      if(option.rx == 1){
+        rx(&img);
+      }
+      if(option.ry == 1){
+        ry(&img);
+      }
+      if(option.ppmtopgm == 1){
+        P3toP2(&img);
+      }
+      if(option.wyswietlenie == 1){
+        show(&option);
+      }
+      if(option.saveimg == 1){
+        saveImg(&img, &option);
+      }
+    }else{
+      printf("---------- Menu ----------\n");
+      printf("1. '-i <nazwa pliku>' - wczytuje plik o podanej nazwie\n");
+      printf("2. '-o <nazwa pliku>' - zapisuje plik o podanej nazwie (gdy jest sam '-' to zapisuje jako plik, który zostal wczytany)\n");
+      printf("3. '-w' - wyswietla obraz\n");
+      printf("4. '-n' - funkcja negatyw\n");
+      printf("5. '-k' - konturowanie (tylko dla PGM)\n");
+      printf("6. '-x' - rozmycie poziome\n");
+      printf("7. '-y' - rozmycie pionowe\n");
+      printf("8. '-h' - rozciaganie histogramu\n");
+      printf("9. '-baw' - zamienia plik ppm na czarnobialy\n");
+      printf("10. '-s' - zapis pliku\n");
+      printf("---------------------------\n");
     }
   }
-
-  return odczytano;*/
+}

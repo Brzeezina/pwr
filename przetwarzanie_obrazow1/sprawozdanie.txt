@@ -1,0 +1,64 @@
+SPRAWOZDANIE
+
+Imię, nazwisko, nr albumu: Konrad Brzeziński 275461
+
+Temat ćwiczenia: Przetwarzanie obrazów v2
+
+Data wykonania: 19.12.2022
+
+Kod źródłowy znajduje się w plikach:
+- odczyt.c
+- opcje.c
+- funkcje.c
+- funkcje.h
+- const.h
+
+Kompilacja: "cc -X odczyt.c funkcje.c opcje.c -lm"
+
+Uruchomienie programu:
+    "./a.out" - wyświetli menu z opcjami do wyboru
+Przykładowe uruchomienie: 
+    "./a.out -i kubus.pgm -o kubus_negatyw.pgm -n".
+Opcje można wywoływać w dowolnej kolejności.
+
+Testy:
+
+1.1 Wywołanie menu.
+1.2 Wczytanie i zapis pliku PGM i PPM
+1.3 Wczytanie innego pliku niż PGM/PPM
+1.4 Wyświetlenie wczytanego obrazu
+2.1 Filtr negatywu
+2.2 Filtr konturowania
+2.3 Filtr rozmycia poziomego/pionowego
+2.4 Filtr rozciągania histogramu
+2.5 Konwersja pliku PPM na PGM
+2.6 Użycie dwóch filtrów (np negatyw i kontur)
+2.7 Użycie dwóch filtrów z poprzedniego testu w tej samej kolejności
+3.1 Niepoprawne argumenty '-i' '-o'
+
+
+Test 1:
+    - Cel testu:
+    - Opis:
+
+Test 1.1:
+    - Cel testu: Wywołanie menu czyli użycie komendy "./a.out" bez argumentów
+    - Opis: Po wpisaniu komendy "./a.out" bez argumentów, program wyświetlił menu ze wszystkimi
+    możliwościami programu.
+
+Test 1.2:
+    - Cel testu: Wczytanie i zapis pliku PGM i PPM
+    - Opis: Testy wykonane na plikach kubus.pgm oraz koza.ppm. Dla obu wyniki testu były takie same.
+    Gdy podano komendę bez argumentu '-s' oznaczającą zapis pliku, to nowy plik o podanej nazwie się 
+    utworzył, lecz bez żadnej zawartości. Gdy dodano argumeny '-s' obraz zapisał się tak jak trzeba,
+    w tym przypadku bez żadnych dodatkowych argumentów, więc oba pliki są identyczne.
+
+Test 1.3:
+    - Cel testu: Wczytanie pliku innego formatu niż PPM/PGM
+    - Opis: Próba wczytania pliku PNG. Program wyświetlił komunikat o błędzie: "Nie jest to plik PGM ani PPM!".
+    Nie powstał nowy plik, więc wszystko się zgadza.
+
+Test 1.4:
+    - Cel testu: 
+
+Wnioski:

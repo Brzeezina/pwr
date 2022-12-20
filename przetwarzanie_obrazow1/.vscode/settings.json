@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "const.h": "c"
+        "const.h": "c",
+        "odczyt.h": "c",
+        "math.h": "c",
+        "stdio.h": "c",
+        "funkcje.h": "c"
     }
 }
