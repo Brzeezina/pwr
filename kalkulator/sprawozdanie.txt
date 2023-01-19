@@ -1,0 +1,230 @@
+Imie: Konrad
+Nazwisko: Brzeziński
+Nr albumu: 275461
+Temat ćwiczenia: Kalkulator RPN (Reverse Polish Notation) oparty o działanie na stosach
+Data wykonania: 19.01.2023r.
+Wersja: 1.0.0
+
+Kod źródłowy programu znajduje się w plikach:
+    - main.c
+    - funkcje.c 
+    - funkcje.h
+    - stos.h
+
+Testy programu:
+
+Test 1:
+    - Cel: Sprawdzenie gdy użytkownik poda coś innego niż liczbę lub jeden z możliwych znaków (r,c,d,q,#,$)
+    - Dane wejściowe: Na przykład litera "a"
+    - Dane zwrotne: Program zwrócił komunikat "Podaj prosze jakas liczbe lub jeden z dostepnych operatorow operator (r,c,d,q,#,$)"
+
+Test 2:
+    - Cel: Sprawdzenie gdy użytkownik poda cyfrę
+    - Dane wejściowe: cyfry 1, 2 i 3 
+    - Dane zwrotne: 
+        "Podaj liczbe: 1
+        Dodano do stosu liczbe 1
+        Aktualny stos: 1 
+        Ilosc elementow w stosie: 1
+        Podaj liczbe: 2
+        Dodano do stosu liczbe 2
+        Aktualny stos: 2 1 
+        Ilosc elementow w stosie: 2
+        Podaj liczbe: 3
+        Dodano do stosu liczbe 3
+        Aktualny stos: 3 2 1 
+        Ilosc elementow w stosie: 3"
+
+    - Komentarz: Po każdym wpisaniu liczby program wyświetla informacje dotyczące:
+        - Jaką liczbę dodaliśmy
+        - Jak aktualnie wygląda nasz stos
+        - Ilość elementów w stosie
+        Stos układa się od lewej do prawej
+
+Test 3:
+    - Cel: Wprowadzenie liczby ujemnej.
+    - Dane wejściowe: liczby -5, -2
+    - Dane zwrotne:
+        "Podaj liczbe: -5
+        Dodano do stosu liczbe -5
+        Aktualny stos: -5 
+        Ilosc elementow w stosie: 1
+        Podaj liczbe: -2
+        Dodano do stosu liczbe -2
+        Aktualny stos: -2 -5 
+        Ilosc elementow w stosie: 2"
+
+    - Komentarz: Po każdym wpisaniu liczby ujemnej program rozpoznaje, że liczba jest ujemna, a minus
+    przed liczbą nie świadczy o operacji odejmowania. Program wyświetla takie same informacje jak w teście nr 2.
+
+Test 4.1:
+    - Cel: Wykonanie operacji dodawania
+    - Dane wejściowe: 2 5 +
+    - Dane zwrotne:
+        "Podaj liczbe lub mozliwy znak: 2
+        Dodano do stosu liczbe 2
+        Aktualny stos: 2 
+        Ilosc elementow w stosie: 1
+        Podaj liczbe lub mozliwy znak: 5
+        Dodano do stosu liczbe 5
+        Aktualny stos: 5 2 
+        Ilosc elementow w stosie: 2
+        Podaj liczbe lub mozliwy znak: +
+        Wykonano dodawanie, o to wynik: 7
+        Aktualny stos: 7 
+        "
+    - Komentarz: Po wprowadzeniu znaku '+' program dodaje dwie najwyżej położone liczby na stosie. Następnie
+    usuwa te liczby i zastępuje je jedną, która jest ich sumą. W przypadku liczb ujemnych wszystko zadziała poprawnie.  
+
+Test 4.2:
+    - Cel: Wykonanie operacji odejmowania
+    - Dane wejściowe: 2 5 -
+    - Dane zwrotne:
+        "Podaj liczbe lub mozliwy znak: 2
+        Dodano do stosu liczbe 2
+        Aktualny stos: 2 
+        Ilosc elementow w stosie: 1
+        Podaj liczbe lub mozliwy znak: 5
+        Dodano do stosu liczbe 5
+        Aktualny stos: 5 2 
+        Ilosc elementow w stosie: 2
+        Podaj liczbe lub mozliwy znak: -
+        Wykonano odejmowanie, o to wynik: 3
+        Aktualny stos: 3 "
+    - Komentarz: Program odejmuje liczbę "niższą" od "wyższej". W przypadku liczb ujemnych wszystko zadziała poprawnie.
+
+Test 4.3:
+    - Cel: Wykonanie operacji mnożenia
+    - Dane wejściowe: 5 -2 *
+    - Dane zwrotne:
+        "Podaj liczbe lub mozliwy znak: 5
+        Dodano do stosu liczbe 5
+        Aktualny stos: 5 
+        Ilosc elementow w stosie: 1
+        Podaj liczbe lub mozliwy znak: -2
+        Dodano do stosu liczbe -2
+        Aktualny stos: -2 5 
+        Ilosc elementow w stosie: 2
+        Podaj liczbe lub mozliwy znak: *
+        Wykonano mnozenie, o to wynik: -10
+        Aktualny stos: -10"
+
+Test 4.4.1:
+    - Cel: Wykonanie operacji dzielenia
+    - Dane wejściowe: 2 10 /
+    - Dane zwrotne:
+    "Podaj liczbe lub mozliwy znak: 2
+    Dodano do stosu liczbe 2
+    Aktualny stos: 2 
+    Ilosc elementow w stosie: 1
+    Podaj liczbe lub mozliwy znak: 10
+    Dodano do stosu liczbe 10
+    Aktualny stos: 10 2 
+    Ilosc elementow w stosie: 2
+    Podaj liczbe lub mozliwy znak: /
+    Wykonano dzielenie, o to wynik: 5
+    Aktualny stos: 5 "
+    - Komentarz: Wszystko poprawnie
+
+Test 4.4.2:
+    - Cel: Wykonanie operacji dzielenia przez 0
+    - Dane wejściowe: 10 0 /
+    - Dane zwrotne:
+    "Podaj liczbe lub mozliwy znak: 0
+    Dodano do stosu liczbe 0
+    Aktualny stos: 0 
+    Ilosc elementow w stosie: 1
+    Podaj liczbe lub mozliwy znak: 10
+    Dodano do stosu liczbe 10
+    Aktualny stos: 10 0 
+    Ilosc elementow w stosie: 2
+    Podaj liczbe lub mozliwy znak: /
+    Blad: Nie mozna dzielic przez zero!"
+    - Komentarz: Program wykrywa dzielenie przez zero i uniemożliwia wykonania tego działania wypisując przy
+    tym stosowny komunikat.
+
+Test 5.1:
+    - Cel: Sprawdzenie działania opcji 'r'
+    - Dane wejściowe: 1 2 3 4 5 6 r
+    - Dane zwrotne: 
+    W wielkim skrócie:
+        - Stos przed użyciem 'r': "Aktualny stos: 6 5 4 3 2 1 "
+        - Stos po użyciu 'r': "Aktualny stos: 1 2 3 4 5 6 "
+    - Komentarz: Funkcja 'r' odwraca stos "do góry nogami". R to skrót od ang. reverse.
+
+Test 5.2:
+    - Cel: Sprawdzenie działania opcji 'r'
+    - Dane wejściowe: 1 2 3 4 5 6 c
+    - Dane zwrotne:
+    W wielkim skrócie:
+        - Stos przed użyciem 'c': "Aktualny stos: 6 5 4 3 2 1 "
+        - Stos po użyciu 'c': "Wyczyszczono stos"
+    - Komentarz: Opcja 'c' czyści nam stos i sprawia, że jest on pusty, przez co nie ma sensu wyświetlać go,
+    więc program wypiusuje tylko krótką wiadomość "Wyczyszczono stos".
+
+Test 5.3:
+    - Cel: Sprawdzenie działania opcji 'd'
+    - Dane wejściowe: 2 d
+    - Dane zwrotne:
+    "Podaj liczbe lub mozliwy znak: 2
+    Dodano do stosu liczbe 2
+    Aktualny stos: 2 
+    Ilosc elementow w stosie: 1
+    Podaj liczbe lub mozliwy znak: d
+    Zduplikowano pierwsza liczbe
+    Aktualny stos: 2 2 
+    Ilosc elementow na stosie: 2"
+    - Komentarz: Opcja 'd' (z ang. duplicate) duplikuje nam pierwszą liczbę na stosie, wypisując przy tym informacje
+    o wykonanym działaniu.
+
+Test 5.4:
+    - Cel: Sprawdzenie działania opcji '#'
+    - Dane wejściowe: 1 2 3 4 5 #
+    - Dane zwrotne:
+    W wielkim skrócie:
+        - Stos przed użyciem '#': "Aktualny stos: 5 4 3 2 1 "
+        - Stos po użyciu '#': "Usunieto ostatnio wprowadzony element
+                               Aktualny stos: 4 3 2 1" 
+
+    - Komentarz: Opcja '#' usuwa pierwszy na stosie element i wypisuje komunikat o wykonanym działaniu.
+
+Test 5.5.1:
+    - Cel: Sprawdzenie działania opcji '$'
+    - Dane wejściowe: 5 10 $ 
+    - Dane zwrotne:
+    "Podaj liczbe lub mozliwy znak: 5
+    Dodano do stosu liczbe 5
+    Aktualny stos: 5 
+    Ilosc elementow w stosie: 1
+    Podaj liczbe lub mozliwy znak: 10
+    Dodano do stosu liczbe 10
+    Aktualny stos: 10 5 
+    Ilosc elementow w stosie: 2
+    Podaj liczbe lub mozliwy znak: $
+    Zamieniono miejscami pierwsze 2 elementy
+    Aktualny stos: 5 10 "
+    - Komentarz: Opcja '$' Zamienia miejscami dwie pierwsze na stosie liczby.
+
+Test 5.5.2:
+    - Cel: Sprawdzenie działania opcji '$' gdy jest tylko 1 element
+    - Dane wejsciowe: 5 $
+    - Dane zwrotne: 
+    "Podaj liczbe lub mozliwy znak: 5
+    Dodano do stosu liczbe 5
+    Aktualny stos: 5 
+    Ilosc elementow w stosie: 1
+    Podaj liczbe lub mozliwy znak: $
+    Blad: Za malo elementow na stosie"
+    - Komentarz: Program wykrywa, że jest tylko jeden element na stosie i uniemożliwia wykonania tej funkcji,
+    wypisując przy tym stosowny komunikat.
+
+Test 5.6:
+    - Cel: Sprawdzenie działania opcji 'q'
+    - Dane wejściowe: q
+    - Dane zwrotne: 
+    "Podaj liczbe lub mozliwy znak: q
+    Zakanczanie dzialania"
+    - Komentarz: Program zakańcza swoje działanie.
+
+Wnioski: Opierając swoje wnioski i opinie na podanych powyżej testach, stwierdzam, że program działa poprawnie 
+    nie wyrzucając najgorszego błędu naruszenia ochrony pamięci. Wszystkie operacje wykonuje dobrze.
